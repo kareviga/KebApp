@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { kColor, typeLabel, meatLabel, calcK } from '../lib/ksystem'
+import { kColor, calcK } from '../lib/ksystem'
 import styles from './MapView.module.css'
 
-export default function MapView({ places, onRate }) {
+export default function MapView({ places = [], onRate }) {
   const mapRef = useRef(null)
   const leafletRef = useRef(null)
   const markersRef = useRef([])
@@ -13,6 +13,7 @@ export default function MapView({ places, onRate }) {
   useEffect(() => {
     if (leafletRef.current) return
     const L = window.L
+    if (!L) { console.error('Leaflet not loaded'); return }
     const map = L.map('lmap', {
       center: [59.925, 10.75],
       zoom: 13,
@@ -33,13 +34,14 @@ export default function MapView({ places, onRate }) {
     markersRef.current.forEach(m => map.removeLayer(m))
     markersRef.current = []
 
-    places.forEach(p => {
-      const k = p.k ?? calcK(p)
-      const col = kColor(k)
+    ;(places || []).forEach(p => {
+      const k = (p.k != null && !isNaN(p.k)) ? p.k : null
+      const kDisplay = k != null ? k : 50
+      const col = kColor(kDisplay)
       const icon = L.divIcon({
         className: '',
         html: `<div style="width:36px;height:36px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;background:${col};box-shadow:0 3px 12px ${col}88">
-          <span style="transform:rotate(45deg);font-family:'IBM Plex Mono',monospace;font-size:10px;color:#fff;font-weight:500">${k.toFixed(0)}</span>
+          <span style="transform:rotate(45deg);font-family:'IBM Plex Mono',monospace;font-size:10px;color:#fff;font-weight:500">${k != null ? k.toFixed(0) : '?'}</span>
         </div>`,
         iconSize: [36, 36],
         iconAnchor: [18, 36],
@@ -49,14 +51,10 @@ export default function MapView({ places, onRate }) {
       const marker = L.marker([p.lat, p.lng], { icon }).addTo(map)
       marker.bindPopup(`
         <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:2px;padding-right:20px">${p.name}</div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(250,247,242,.4);margin-bottom:8px">${p.addr || ''}</div>
-        <div style="display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap">
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 8px;background:rgba(255,255,255,.08);border-radius:4px;color:rgba(250,247,242,.45);text-transform:uppercase">${typeLabel(p.type)}</span>
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 8px;background:rgba(255,255,255,.08);border-radius:4px;color:rgba(250,247,242,.45);text-transform:uppercase">${meatLabel(p.meat)}</span>
-        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(250,247,242,.4);margin-bottom:12px">${p.address || ''}</div>
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
           <div>
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:44px;font-weight:500;color:${col};line-height:1">${k.toFixed(1)}</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:44px;font-weight:500;color:${col};line-height:1">${k != null ? k.toFixed(1) : '—'}</div>
             <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(250,247,242,.32);letter-spacing:.08em;text-transform:uppercase;margin-top:4px">${p.ratingCount ?? 0} vurdering${(p.ratingCount ?? 0) !== 1 ? 'er' : ''}</div>
           </div>
           <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
@@ -88,9 +86,9 @@ export default function MapView({ places, onRate }) {
   const handleSearch = (q) => {
     setSearch(q)
     if (!q.trim()) { setResults([]); setShowResults(false); return }
-    const hits = places.filter(p =>
+    const hits = (places || []).filter(p =>
       p.name.toLowerCase().includes(q.toLowerCase()) ||
-      (p.addr || '').toLowerCase().includes(q.toLowerCase())
+      (p.address || '').toLowerCase().includes(q.toLowerCase())
     ).slice(0, 6)
     setResults(hits)
     setShowResults(true)
@@ -130,7 +128,7 @@ export default function MapView({ places, onRate }) {
               <div key={p.id} className={styles.result} onMouseDown={() => selectResult(p)}>
                 <div>
                   <div className={styles.resultName}>{p.name}</div>
-                  <div className={styles.resultAddr}>{p.addr}</div>
+                  <div className={styles.resultAddr}>{p.address}</div>
                 </div>
                 <div className={styles.resultK} style={{ color: kColor(p.k) }}>
                   {p.k?.toFixed(1)}

@@ -4,23 +4,17 @@ import styles from './RateView.module.css'
 
 const DEFAULT_SCORES = { bst: 5, bs: 5, bf: 5, bp: 5 }
 
-export default function RateView({ user, prefill, onSubmit }) {
-  const [name, setName] = useState('')
-  const [addr, setAddr] = useState('')
+export default function RateView({ user, places = [], prefill, onSubmit }) {
+  const [placeId, setPlaceId] = useState('')
   const [type, setType] = useState('pita')
   const [meat, setMeat] = useState('kylling')
   const [scores, setScores] = useState(DEFAULT_SCORES)
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
 
-  // Prefill from map popup click
+  // Prefill place from map popup click
   useEffect(() => {
-    if (prefill) {
-      setName(prefill.name || '')
-      setAddr(prefill.addr || '')
-      setType(prefill.type || 'pita')
-      setMeat(prefill.meat || 'kylling')
-    }
+    if (prefill?.placeId) setPlaceId(String(prefill.placeId))
   }, [prefill])
 
   const k = calcK(scores)
@@ -28,14 +22,14 @@ export default function RateView({ user, prefill, onSubmit }) {
   const handleSlider = (key, val) => setScores(s => ({ ...s, [key]: +val }))
 
   const handleSubmit = async () => {
-    if (!name.trim()) return
+    if (!placeId) return
     setSubmitting(true)
     try {
-      await onSubmit({ name, addr, type, meat, scores })
+      await onSubmit({ placeId: Number(placeId), type, meat, scores })
       setDone(true)
       setTimeout(() => {
         setDone(false)
-        setName(''); setAddr(''); setScores(DEFAULT_SCORES)
+        setScores(DEFAULT_SCORES)
       }, 2000)
     } catch (e) {
       alert(e.message)
@@ -51,15 +45,14 @@ export default function RateView({ user, prefill, onSubmit }) {
 
           <div className={styles.section}>
             <div className={styles.sectionTitle}>Stedet</div>
-            <div className={styles.row}>
-              <div className={styles.field}>
-                <label className={styles.label}>Navn</label>
-                <input className={styles.input} value={name} onChange={e => setName(e.target.value)} placeholder="f.eks. Kebab Palace"/>
-              </div>
-              <div className={styles.field}>
-                <label className={styles.label}>Adresse</label>
-                <input className={styles.input} value={addr} onChange={e => setAddr(e.target.value)} placeholder="Gate og by"/>
-              </div>
+            <div className={styles.field}>
+              <label className={styles.label}>Velg kebabsted</label>
+              <select className={styles.select} value={placeId} onChange={e => setPlaceId(e.target.value)}>
+                <option value="">— Velg et sted —</option>
+                {places.map(p => (
+                  <option key={p.id} value={p.id}>{p.name}{p.address ? ` — ${p.address}` : ''}</option>
+                ))}
+              </select>
             </div>
             <div className={styles.row}>
               <div className={styles.field}>
@@ -130,7 +123,7 @@ export default function RateView({ user, prefill, onSubmit }) {
             <button
               className={`${styles.submit} ${done ? styles.done : ''}`}
               onClick={handleSubmit}
-              disabled={submitting || !user || !name.trim()}
+              disabled={submitting || !user || !placeId}
             >
               {done ? '✓ LAGRET!' : submitting ? 'LAGRER...' : 'SEND INN VURDERING'}
             </button>

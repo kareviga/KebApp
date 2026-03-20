@@ -15,7 +15,7 @@ import styles from './App.module.css'
 
 export default function App() {
   const { user, loading } = useAuth()
-  const { places, submitRating, addPlace } = usePlaces()
+  const { places, submitRating } = usePlaces()
   const [view, setView] = useState('map')
   const [prefill, setPrefill] = useState(null)
 
@@ -30,36 +30,21 @@ export default function App() {
   const navigate = (v) => setView(v)
 
   const handleRate = (place) => {
-    setPrefill(place)
+    setPrefill({ placeId: place.id })
     setView('rate')
   }
 
   const handleJumpMap = (place) => {
     setView('map')
-    // MapView handles centering via window event
     window.__jumpToPlace?.(place)
   }
 
-  const handleSubmit = async ({ name, addr, type, meat, scores }) => {
-    // Find existing place or create new one
-    const existing = places.find(p =>
-      p.name.toLowerCase() === name.toLowerCase()
-    )
-    let placeId = existing?.id
-
-    if (!placeId) {
-      // Geocode would go here in production — for now use Oslo center with slight offset
-      const newPlace = await addPlace({
-        name, addr, type, meat,
-        lat: 59.9139 + (Math.random() - .5) * .04,
-        lng: 10.7522 + (Math.random() - .5) * .06,
-      })
-      placeId = newPlace.id
-    }
-
+  const handleSubmit = async ({ placeId, type, meat, scores }) => {
     await submitRating({
       placeId,
       userId: user.id,
+      type,
+      meat,
       bst: scores.bst,
       bs: scores.bs,
       bf: scores.bf,
@@ -81,7 +66,7 @@ export default function App() {
             <RankingView places={places} onJumpMap={handleJumpMap} />
           </div>
           <div className={`${styles.view} ${view === 'rate' ? styles.active : ''}`}>
-            <RateView user={user} prefill={prefill} onSubmit={handleSubmit} />
+            <RateView user={user} places={places} prefill={prefill} onSubmit={handleSubmit} />
           </div>
           <div className={`${styles.view} ${view === 'info' ? styles.active : ''}`}>
             <InfoView />
