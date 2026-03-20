@@ -1,8 +1,32 @@
+import { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import styles from './Login.module.css'
 
 export default function Login() {
-  const { signInWithGoogle, signInWithFacebook } = useAuth()
+  const { signInWithGoogle, signInWithFacebook, signInWithEmail, signUpWithEmail } = useAuth()
+  const [mode, setMode] = useState('signin') // 'signin' | 'signup'
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleEmailSubmit = async () => {
+    if (!email || !password) return
+    setError(''); setMessage(''); setLoading(true)
+    try {
+      if (mode === 'signin') {
+        const { error } = await signInWithEmail(email, password)
+        if (error) setError(error.message)
+      } else {
+        const { error } = await signUpWithEmail(email, password)
+        if (error) setError(error.message)
+        else setMessage('Sjekk e-posten din for bekreftelseslenke!')
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className={styles.wrap}>
@@ -15,6 +39,7 @@ export default function Login() {
           Vitenskapelig kebabgransking siden 2024.
           <br/>Logg inn for å gi vurderinger.
         </p>
+
         <div className={styles.buttons}>
           <button className={styles.btnGoogle} onClick={signInWithGoogle}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -30,6 +55,34 @@ export default function Login() {
               <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
             </svg>
             Fortsett med Facebook
+          </button>
+        </div>
+
+        <div className={styles.divider}><span>eller</span></div>
+
+        <div className={styles.emailForm}>
+          <input
+            className={styles.input}
+            type="email"
+            placeholder="E-post"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <input
+            className={styles.input}
+            type="password"
+            placeholder="Passord"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleEmailSubmit()}
+          />
+          {error && <div className={styles.error}>{error}</div>}
+          {message && <div className={styles.message}>{message}</div>}
+          <button className={styles.btnEmail} onClick={handleEmailSubmit} disabled={loading}>
+            {loading ? 'Venter...' : mode === 'signin' ? 'Logg inn' : 'Opprett konto'}
+          </button>
+          <button className={styles.toggle} onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setError(''); setMessage('') }}>
+            {mode === 'signin' ? 'Ingen konto? Registrer deg' : 'Har du konto? Logg inn'}
           </button>
         </div>
       </div>

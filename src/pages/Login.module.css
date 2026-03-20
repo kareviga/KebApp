@@ -87,3 +87,82 @@
   transition: background .15s;
 }
 .btnFacebook:hover { background: #1464d8; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 16px;
+  color: var(--t3);
+  font-size: 12px;
+  font-family: var(--fm);
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--b2);
+}
+
+.emailForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--s1);
+  border: 1px solid var(--b2);
+  border-radius: var(--rs);
+  font-family: var(--fb);
+  font-size: 14px;
+  color: var(--t1);
+  box-sizing: border-box;
+}
+.input:focus { outline: none; border-color: var(--ac2); }
+.input::placeholder { color: var(--t3); }
+
+.btnEmail {
+  padding: 12px 20px;
+  background: var(--ac2);
+  border: none;
+  border-radius: var(--rs);
+  font-family: var(--fm);
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: opacity .15s;
+}
+.btnEmail:hover { opacity: .85; }
+.btnEmail:disabled { opacity: .5; cursor: default; }
+
+.toggle {
+  background: none;
+  border: none;
+  color: var(--t3);
+  font-size: 12px;
+  font-family: var(--fb);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+.toggle:hover { color: var(--t2); }
+
+.error {
+  font-size: 12px;
+  color: var(--ac2);
+  font-family: var(--fb);
+  text-align: left;
+}
+
+.message {
+  font-size: 12px;
+  color: #3d8a5e;
+  font-family: var(--fb);
+  text-align: left;
+}
