@@ -1,0 +1,36 @@
+.nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 52px;
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,.07);
+  z-index: 1000;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: transparent;
+  border: none;
+  color: rgba(250,247,242,.28);
+  cursor: pointer;
+  font-family: var(--fm);
+  font-size: 8px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  height: 100%;
+  transition: color .15s;
+}
+.btn svg { width: 18px; height: 18px; }
+.btn.on { color: var(--ac2); }
+
+@media (max-width: 599px) {
+  .nav { display: flex; }
+}

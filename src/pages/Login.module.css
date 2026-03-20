@@ -1,0 +1,89 @@
+.wrap {
+  height: 100vh;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--pad);
+}
+
+.card {
+  background: var(--s0);
+  border-radius: var(--r);
+  padding: 40px 32px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+}
+
+.logo {
+  font-family: var(--fd);
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: -.01em;
+  margin-bottom: 6px;
+}
+
+.k {
+  color: var(--ac2);
+  font-style: italic;
+}
+
+.tagline {
+  font-family: var(--fm);
+  font-size: 9px;
+  color: var(--t3);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.desc {
+  font-size: 14px;
+  color: var(--t2);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btnGoogle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: #fff;
+  border: 1px solid var(--b2);
+  border-radius: var(--rs);
+  font-family: var(--fb);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--t1);
+  cursor: pointer;
+  transition: background .15s;
+}
+.btnGoogle:hover { background: var(--s1); }
+
+.btnFacebook {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: #1877f2;
+  border: none;
+  border-radius: var(--rs);
+  font-family: var(--fb);
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btnFacebook:hover { background: #1464d8; }

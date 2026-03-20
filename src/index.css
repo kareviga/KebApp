@@ -1,0 +1,88 @@
+:root {
+  --bg: #f5f0e8;
+  --s0: #faf7f2;
+  --s1: #f0ebe0;
+  --s2: #e8e0d0;
+  --s3: #ddd4c0;
+  --b1: rgba(60,40,10,.08);
+  --b2: rgba(60,40,10,.16);
+  --b3: rgba(60,40,10,.28);
+  --ink: #1c1510;
+  --ac: #c93a1a;
+  --ac2: #e8541e;
+  --am: #d4850a;
+  --gr: #3d8a5e;
+  --cream: #faf7f2;
+  --t1: #1c1510;
+  --t2: #5c4a30;
+  --t3: #9c876a;
+  --fd: 'Playfair Display', serif;
+  --fm: 'IBM Plex Mono', monospace;
+  --fb: 'Inter', sans-serif;
+  --r: 10px;
+  --rs: 6px;
+  --header: 62px;
+  --footer: 46px;
+  --pad: 20px;
+  --pad-top: 24px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg);
+  color: var(--t1);
+  font-family: var(--fb);
+  font-size: 15px;
+  overflow: hidden;
+}
+
+/* Leaflet overrides */
+.leaflet-container { background: #e8e0d0 !important; }
+.leaflet-tile-pane { filter: saturate(0.45) sepia(0.35) brightness(0.9); }
+.leaflet-popup-content-wrapper {
+  background: var(--ink) !important;
+  border: none !important;
+  border-radius: var(--r) !important;
+  color: var(--cream) !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,.45) !important;
+}
+.leaflet-popup-content { margin: 16px 18px !important; color: var(--cream); }
+.leaflet-popup-tip { background: var(--ink) !important; }
+.leaflet-popup-close-button { color: rgba(250,247,242,.35) !important; font-size: 20px !important; top: 8px !important; right: 10px !important; }
+.leaflet-top.leaflet-left { display: none !important; }
+.leaflet-top.leaflet-right .leaflet-control-zoom { margin-top: 14px; margin-right: 14px; }
+.leaflet-control-zoom a { background: var(--ink) !important; color: var(--cream) !important; border-color: rgba(255,255,255,.12) !important; }
+.leaflet-control-zoom a:hover { background: #2c1f12 !important; }
+.leaflet-bar { border: none !important; box-shadow: 0 2px 14px rgba(0,0,0,.3) !important; }
+.leaflet-attribution { display: none !important; }
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 3px;
+  background: var(--s3);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ac);
+  border: 3px solid var(--s0);
+  cursor: pointer;
+  transition: transform .1s;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+}
+input[type=range]:active::-webkit-slider-thumb { transform: scale(1.15); }
+
+@media (max-width: 599px) {
+  :root {
+    --pad: 16px;
+    --pad-top: 16px;
+  }
+}

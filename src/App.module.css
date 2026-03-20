@@ -1,0 +1,52 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.shell {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  padding-top: var(--header);
+  padding-bottom: var(--footer);
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.view {
+  display: none;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.view.active { display: flex; }
+
+.loading {
+  height: 100vh;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loadingLogo {
+  font-family: var(--fd);
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--cream);
+  letter-spacing: -.01em;
+}
+.loadingLogo span { color: var(--ac2); font-style: italic; }
+
+@media (max-width: 599px) {
+  .shell { padding-bottom: 52px; }
+}
