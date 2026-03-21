@@ -6,6 +6,7 @@ export default function Header({ onNavigate }) {
 
   return (
     <header className={styles.head}>
+      <div className={styles.headInner}>
       <div className={styles.logo} onClick={() => onNavigate('map')}>
         <span className={styles.k}>K</span>ebAppen
       </div>
@@ -26,6 +27,7 @@ export default function Header({ onNavigate }) {
               : user.email?.[0]?.toUpperCase()}
           </button>
         )}
+      </div>
       </div>
     </header>
   )

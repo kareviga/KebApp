@@ -19,7 +19,7 @@ create table if not exists public.ratings (
   place_id    bigint not null references public.places(id) on delete cascade,
   user_id     uuid  not null references auth.users(id) on delete cascade,
   type        text  not null check (type in ('pita','rull','tallerken')),
-  meat        text  not null check (meat in ('storfe','kylling','lam','mix')),
+  meat        text  not null check (meat in ('storfe','kylling','lam','mix','svin')),
   bst         numeric(4,1) not null check (bst >= 0 and bst <= 10),
   bs          numeric(4,1) not null check (bs  >= 0 and bs  <= 10),
   bf          numeric(4,1) not null check (bf  >= 0 and bf  <= 10),

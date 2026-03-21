@@ -2,6 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { kColor, calcK } from '../lib/ksystem'
 import styles from './MapView.module.css'
 
+const TYPES = ['all','pita','rull','tallerken']
+const MEATS = ['all','storfe','kylling','lam','mix','svin']
+const TYPE_LABELS = { all:'Alle', pita:'🫓 Pita', rull:'🌯 Rull', tallerken:'🍽️ Tallerken' }
+const MEAT_LABELS = { all:'Alle', storfe:'🐄 Storfe', kylling:'🐔 Kylling', lam:'🐑 Lam', mix:'🥩 Mix', svin:'🐷 Svin' }
+
 export default function MapView({ places = [], onRate }) {
   const mapRef = useRef(null)
   const leafletRef = useRef(null)
@@ -9,6 +14,8 @@ export default function MapView({ places = [], onRate }) {
   const [search, setSearch] = useState('')
   const [results, setResults] = useState([])
   const [showResults, setShowResults] = useState(false)
+  const [typeFilter, setTypeFilter] = useState('all')
+  const [meatFilter, setMeatFilter] = useState('all')
 
   useEffect(() => {
     if (leafletRef.current) return
@@ -34,7 +41,15 @@ export default function MapView({ places = [], onRate }) {
     markersRef.current.forEach(m => map.removeLayer(m))
     markersRef.current = []
 
-    ;(places || []).forEach(p => {
+    const isFiltered = typeFilter !== 'all' || meatFilter !== 'all'
+    const visible = isFiltered
+      ? places.filter(p => Object.values(p.combos || {}).some(c =>
+          (typeFilter === 'all' || c.type === typeFilter) &&
+          (meatFilter === 'all' || c.meat === meatFilter)
+        ))
+      : places
+
+    visible.forEach(p => {
       const k = (p.k != null && !isNaN(p.k)) ? p.k : null
       const kDisplay = k != null ? k : 50
       const col = kColor(kDisplay)
@@ -72,7 +87,7 @@ export default function MapView({ places = [], onRate }) {
 
       markersRef.current.push(marker)
     })
-  }, [places])
+  }, [places, typeFilter, meatFilter])
 
   // Bridge popup button → React
   useEffect(() => {
@@ -107,6 +122,20 @@ export default function MapView({ places = [], onRate }) {
   return (
     <div className={styles.wrap}>
       <div id="lmap" className={styles.map} ref={mapRef} />
+      <div className={styles.filterBar}>
+        <div className={styles.filterGroup}>
+          {TYPES.map(t => (
+            <button key={t} className={`${styles.chip} ${typeFilter === t ? styles.on : ''}`}
+              onClick={() => setTypeFilter(t)}>{TYPE_LABELS[t]}</button>
+          ))}
+        </div>
+        <div className={styles.filterGroup}>
+          {MEATS.map(m => (
+            <button key={m} className={`${styles.chip} ${meatFilter === m ? styles.on : ''}`}
+              onClick={() => setMeatFilter(m)}>{MEAT_LABELS[m]}</button>
+          ))}
+        </div>
+      </div>
 
       <div className={styles.searchWrap}>
         <div className={styles.searchInner}>

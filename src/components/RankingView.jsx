@@ -3,9 +3,9 @@ import { kColor, kClass, typeLabel, meatLabel } from '../lib/ksystem'
 import styles from './RankingView.module.css'
 
 const TYPES = ['all','pita','rull','tallerken']
-const MEATS = ['all','storfe','kylling','lam','mix']
+const MEATS = ['all','storfe','kylling','lam','mix','svin']
 const TYPE_LABELS = { all:'Alle', pita:'🫓 Pita', rull:'🌯 Rull', tallerken:'🍽️ Tallerken' }
-const MEAT_LABELS = { all:'Alle', storfe:'🐄 Storfe', kylling:'🐔 Kylling', lam:'🐑 Lam', mix:'🥩 Mix' }
+const MEAT_LABELS = { all:'Alle', storfe:'🐄 Storfe', kylling:'🐔 Kylling', lam:'🐑 Lam', mix:'🥩 Mix', svin:'🐷 Svin' }
 
 export default function RankingView({ places = [], onJumpMap }) {
   const [typeFilter, setTypeFilter] = useState('all')
@@ -57,6 +57,7 @@ export default function RankingView({ places = [], onJumpMap }) {
       </div>
 
       <div className={styles.scroll}>
+        <div className={styles.inner}>
         {sorted.length === 0 && (
           <div className={styles.empty}>
             <div className={styles.emptyIcon}>🥙</div>
@@ -124,6 +125,7 @@ export default function RankingView({ places = [], onJumpMap }) {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </div>
     </div>

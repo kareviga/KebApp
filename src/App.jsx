@@ -9,7 +9,6 @@ import MapView from './components/MapView'
 import RankingView from './components/RankingView'
 import RateView from './components/RateView'
 import InfoView from './components/InfoView'
-import MapLegend from './components/MapLegend'
 import Login from './pages/Login'
 import styles from './App.module.css'
 
@@ -74,8 +73,7 @@ export default function App() {
         </main>
       </div>
 
-      <MapLegend visible={view === 'map'} />
-      <Footer onNavigate={navigate} />
+<Footer onNavigate={navigate} />
       <BottomNav active={view} onNavigate={navigate} />
     </div>
   )

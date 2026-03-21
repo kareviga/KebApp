@@ -17,6 +17,36 @@
 .formulaEq { font-family: var(--fm); font-size: 15px; color: var(--cream); letter-spacing: .02em; line-height: 1.7; }
 .formulaSub { font-family: var(--fm); font-size: 10px; color: rgba(250,247,242,.32); margin-top: 10px; letter-spacing: .06em; }
 
+.formulaVisual {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 16px;
+  flex-wrap: wrap;
+}
+.fvItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--s0);
+  border: 1px solid var(--b1);
+  border-radius: var(--r);
+  padding: 12px 16px;
+  min-width: 70px;
+  overflow: hidden;
+}
+.fvBar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+}
+.fvKey { font-family: var(--fm); font-size: 20px; color: var(--ac); font-weight: 500; }
+.fvName { font-size: 11px; color: var(--t3); margin-top: 2px; }
+.fvWeight { font-family: var(--fm); font-size: 13px; color: var(--t1); margin-top: 6px; font-weight: 500; }
+.fvPlus { font-size: 18px; color: var(--t3); flex-shrink: 0; }
+.fvResult { font-family: var(--fm); font-size: 13px; color: var(--t2); white-space: nowrap; padding-left: 4px; }
+
 .paramGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
 .paramCard { background: var(--s0); border: 1px solid var(--b1); border-radius: var(--r); padding: 14px 16px; }
 .paramKey { font-family: var(--fm); font-size: 22px; color: var(--ac); line-height: 1; font-weight: 500; }

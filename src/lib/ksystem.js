@@ -27,7 +27,8 @@ export function verdict(k) {
 
 export const SLIDER_DEFS = [
   {
-    key: 'bst', name: 'Størrelse (Bst)',
+    key: 'bst', name: 'Størrelse (Bst)', weight: 35,
+    desc: 'Mengde mat i forhold til pris. En sjenerøs porsjon til lav pris gir høy score. Dette er kjernen i kebabopplevelsen.',
     labels: {
       0: 'Hvor er babben?', 1: 'Knøttliten babb', 2: 'Knøttliten babb',
       3: 'Liten babb i fht pris', 4: 'Liten babb', 5: 'Litt liten babb i fht pris',
@@ -36,7 +37,8 @@ export const SLIDER_DEFS = [
     },
   },
   {
-    key: 'bs', name: 'Smak (Bs)',
+    key: 'bs', name: 'Smak (Bs)', weight: 35,
+    desc: 'Helhetlig smaksopplevelse — krydder, balanse og ettersmak. Veier like mye som størrelse fordi dårlig smak ikke kan kompenseres.',
     labels: {
       0: "Hiv'an på sjøen!", 1: 'Smaker mildt sagt vondt', 2: 'Smaker vondt',
       3: 'Går ned, men ingen god opplevelse', 4: 'Ingen god opplevelse',
@@ -46,7 +48,8 @@ export const SLIDER_DEFS = [
     },
   },
   {
-    key: 'bf', name: 'Friskhet og råvarer (Bf)',
+    key: 'bf', name: 'Friskhet og råvarer (Bf)', weight: 15,
+    desc: 'Kvalitet og friskhet på ingrediensene. Ferske grønnsaker og godt kjøtt løfter hele opplevelsen.',
     labels: {
       0: 'Ekle og gamle råvarer', 1: 'Ikkje bra!', 2: 'Ikkje bra!',
       3: 'Litt dvaske greier', 4: 'Litt dvaske', 5: 'Normale råvarer',
@@ -55,7 +58,8 @@ export const SLIDER_DEFS = [
     },
   },
   {
-    key: 'bp', name: 'Stemning og sørvis (Bp)',
+    key: 'bp', name: 'Stemning og sørvis (Bp)', weight: 15,
+    desc: 'Atmosfære, service og totalopplevelsen av stedet. Kebab er mer enn mat — det er kultur.',
     labels: {
       0: 'Bedre stemning i Mariupol', 1: 'Dårlig stemning', 2: 'Dårlig stemning',
       3: 'Ikke spesielt trivelig', 4: 'Litt under normalen', 5: 'Normal stemning',
@@ -66,7 +70,7 @@ export const SLIDER_DEFS = [
 ]
 
 export function meatLabel(m) {
-  return { storfe: '🐄 Storfe', kylling: '🐔 Kylling', lam: '🐑 Lam', mix: '🥩 Mix' }[m] || m
+  return { storfe: '🐄 Storfe', kylling: '🐔 Kylling', lam: '🐑 Lam', mix: '🥩 Mix', svin: '🐷 Svin' }[m] || m
 }
 
 export function typeLabel(t) {

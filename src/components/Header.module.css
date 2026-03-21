@@ -6,9 +6,17 @@
   border-bottom: 3px solid var(--ac);
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 0 var(--pad);
   gap: 0;
   z-index: 1000;
+}
+
+.headInner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .logo {

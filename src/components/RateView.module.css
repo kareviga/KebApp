@@ -17,7 +17,10 @@
 
 .sliderBlock { margin-bottom: 20px; }
 .sliderMeta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
-.sliderName { font-size: 13px; font-weight: 500; color: var(--t1); }
+.sliderName { font-size: 13px; font-weight: 500; color: var(--t1); cursor: pointer; user-select: none; }
+.sliderName:hover { color: var(--ac2); }
+.infoIcon { font-size: 11px; color: var(--t3); margin-left: 3px; }
+.infoBox { background: var(--s0); border: 1px solid var(--b2); border-radius: var(--rs); padding: 10px 12px; font-size: 12px; color: var(--t2); line-height: 1.6; margin-bottom: 8px; }
 .sliderScore { font-family: var(--fm); font-size: 24px; color: var(--ac); line-height: 1; font-weight: 500; }
 .sliderDesc { font-size: 12px; color: var(--t3); font-style: italic; min-height: 16px; margin-bottom: 8px; }
 

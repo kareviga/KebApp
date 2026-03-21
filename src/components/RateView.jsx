@@ -11,6 +11,7 @@ export default function RateView({ user, places = [], prefill, onSubmit }) {
   const [scores, setScores] = useState(DEFAULT_SCORES)
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
+  const [activeInfo, setActiveInfo] = useState(null)
 
   // Prefill place from map popup click
   useEffect(() => {
@@ -70,6 +71,7 @@ export default function RateView({ user, places = [], prefill, onSubmit }) {
                   <option value="kylling">🐔 Kylling</option>
                   <option value="lam">🐑 Lam</option>
                   <option value="mix">🥩 Mix</option>
+                  <option value="svin">🐷 Svin</option>
                 </select>
               </div>
             </div>
@@ -80,9 +82,19 @@ export default function RateView({ user, places = [], prefill, onSubmit }) {
             {SLIDER_DEFS.map(s => (
               <div key={s.key} className={styles.sliderBlock}>
                 <div className={styles.sliderMeta}>
-                  <span className={styles.sliderName}>{s.name}</span>
+                  <span
+                    className={styles.sliderName}
+                    onClick={() => setActiveInfo(activeInfo === s.key ? null : s.key)}
+                  >
+                    {s.name} <span className={styles.infoIcon}>ⓘ</span>
+                  </span>
                   <span className={styles.sliderScore}>{scores[s.key].toFixed(1)}</span>
                 </div>
+                {activeInfo === s.key && (
+                  <div className={styles.infoBox}>
+                    {s.desc} <strong>Vekt: {s.weight}%</strong>
+                  </div>
+                )}
                 <div className={styles.sliderDesc}>{s.labels[Math.round(scores[s.key])]}</div>
                 <input type="range" min="0" max="10" step="0.1"
                   value={scores[s.key]}

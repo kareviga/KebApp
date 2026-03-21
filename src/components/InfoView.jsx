@@ -18,11 +18,26 @@ export default function InfoView() {
 
           <div className={styles.section}>
             <div className={styles.h}>Slik fungerer det</div>
-            <p className={styles.p}>K-verdien beregnes fra fire <em>babbparametere</em>. Høy K-verdi indikerer et godt kjøp — lav verdi betyr at kebaben har potensiale til å skape dårlig stemning.</p>
-            <div className={styles.formula}>
-              <div className={styles.formulaEq}>K = (Bst × 0.35 + Bs × 0.35 + Bf × 0.15 + Bp × 0.15) × 10</div>
-              <div className={styles.formulaSub}>Maks K-verdi: 100 · Parametere scores 0.0–10.0</div>
+            <p className={styles.p}>K-verdien beregnes fra fire <em>babbparametere</em>, scoret 0–10. Høy K-verdi indikerer et godt kjøp.</p>
+
+            <div className={styles.formulaVisual}>
+              {[
+                { key: 'Bst', name: 'Størrelse', weight: 35, color: '#c93a1a' },
+                { key: 'Bs',  name: 'Smak',      weight: 35, color: '#c93a1a' },
+                { key: 'Bf',  name: 'Friskhet',  weight: 15, color: '#d4850a' },
+                { key: 'Bp',  name: 'Stemning',  weight: 15, color: '#d4850a' },
+              ].map((p, i, arr) => (
+                <div key={p.key} className={styles.fvItem}>
+                  <div className={styles.fvBar} style={{ background: p.color, opacity: 0.15 + p.weight / 60 }} />
+                  <div className={styles.fvKey}>{p.key}</div>
+                  <div className={styles.fvName}>{p.name}</div>
+                  <div className={styles.fvWeight}>{p.weight}%</div>
+                  {i < arr.length - 1 && <div className={styles.fvPlus}>+</div>}
+                </div>
+              ))}
+              <div className={styles.fvResult}>= K (0–100)</div>
             </div>
+
             <div className={styles.paramGrid}>
               {[
                 { key: 'Bst', name: 'Størrelse', desc: 'Mengde mat i forhold til pris. En sjenerøs porsjon til lav pris gir høy score.', weight: '35 %' },
