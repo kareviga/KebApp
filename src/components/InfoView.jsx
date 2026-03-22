@@ -20,35 +20,38 @@ export default function InfoView() {
             <div className={styles.h}>Slik fungerer det</div>
             <p className={styles.p}>K-verdien beregnes fra fire <em>babbparametere</em>, scoret 0–10. Høy K-verdi indikerer et godt kjøp.</p>
 
-            <div className={styles.formulaVisual}>
+            {/* Stacked weight bar */}
+            <div className={styles.stackBar}>
               {[
-                { key: 'Bst', name: 'Størrelse', weight: 35, color: '#c93a1a' },
                 { key: 'Bs',  name: 'Smak',      weight: 40, color: '#c93a1a' },
-                { key: 'Bf',  name: 'Friskhet',  weight: 20, color: '#d4850a' },
-                { key: 'Bp',  name: 'Stemning',  weight:  5, color: '#d4850a' },
-              ].map((p, i, arr) => (
-                <div key={p.key} className={styles.fvItem}>
-                  <div className={styles.fvBar} style={{ background: p.color, opacity: 0.15 + p.weight / 60 }} />
-                  <div className={styles.fvKey}>{p.key}</div>
-                  <div className={styles.fvName}>{p.name}</div>
-                  <div className={styles.fvWeight}>{p.weight}%</div>
-                  {i < arr.length - 1 && <div className={styles.fvPlus}>+</div>}
+                { key: 'Bst', name: 'Størrelse',  weight: 35, color: '#e0541e' },
+                { key: 'Bf',  name: 'Friskhet',   weight: 20, color: '#d4850a' },
+                { key: 'Bp',  name: 'Stemning',   weight:  5, color: '#9c876a' },
+              ].map(p => (
+                <div key={p.key} className={styles.stackSegment} style={{ width: `${p.weight}%`, background: p.color }} title={`${p.name} — ${p.weight}%`}>
+                  {p.weight >= 15 && <span className={styles.stackLabel}>{p.weight}%</span>}
                 </div>
               ))}
-              <div className={styles.fvResult}>= K (0–100)</div>
             </div>
 
-            <div className={styles.paramGrid}>
+            {/* Parameter rows */}
+            <div className={styles.paramList}>
               {[
-                { key: 'Bst', name: 'Størrelse', desc: 'Mengde mat i forhold til pris. En sjenerøs porsjon til lav pris gir høy score.', weight: '35 %' },
-                { key: 'Bs',  name: 'Smak',      desc: 'Helhetlig smaksopplevelse — krydder, balanse og ettersmak.', weight: '40 %' },
-                { key: 'Bf',  name: 'Friskhet og råvarer', desc: 'Ingredienskvalitet. Ferske råvarer gir høy score.', weight: '20 %' },
-                { key: 'Bp',  name: 'Stemning og sørvis',  desc: 'Atmosfære og service på stedet.', weight: '5 %' },
+                { key: 'Bs',  name: 'Smak',               weight: 40, color: '#c93a1a', desc: 'Helhetlig smaksopplevelse — krydder, balanse og ettersmak.' },
+                { key: 'Bst', name: 'Størrelse',           weight: 35, color: '#e0541e', desc: 'Mengde mat i forhold til pris. En sjenerøs porsjon til lav pris gir høy score.' },
+                { key: 'Bf',  name: 'Friskhet og råvarer', weight: 20, color: '#d4850a', desc: 'Ingredienskvalitet og friskhet på råvarene.' },
+                { key: 'Bp',  name: 'Stemning og sørvis',  weight:  5, color: '#9c876a', desc: 'Atmosfære og service på stedet.' },
               ].map(p => (
-                <div key={p.key} className={styles.paramCard}>
-                  <div className={styles.paramKey}>{p.key}</div>
-                  <div className={styles.paramName}>{p.name}</div>
-                  <div className={styles.paramDesc}>{p.desc} <strong>Vekt: {p.weight}</strong></div>
+                <div key={p.key} className={styles.paramRow}>
+                  <div className={styles.paramRowTop}>
+                    <span className={styles.paramRowKey} style={{ color: p.color }}>{p.key}</span>
+                    <span className={styles.paramRowName}>{p.name}</span>
+                    <span className={styles.paramRowPct} style={{ color: p.color }}>{p.weight}%</span>
+                  </div>
+                  <div className={styles.paramRowTrack}>
+                    <div className={styles.paramRowFill} style={{ width: `${p.weight}%`, background: p.color }} />
+                  </div>
+                  <div className={styles.paramRowDesc}>{p.desc}</div>
                 </div>
               ))}
             </div>
