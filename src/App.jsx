@@ -9,6 +9,7 @@ import MapView from './components/MapView'
 import RankingView from './components/RankingView'
 import RateView from './components/RateView'
 import InfoView from './components/InfoView'
+import ProfileView from './components/ProfileView'
 import Login from './pages/Login'
 import styles from './App.module.css'
 
@@ -69,6 +70,9 @@ export default function App() {
           </div>
           <div className={`${styles.view} ${view === 'info' ? styles.active : ''}`}>
             <InfoView />
+          </div>
+          <div className={`${styles.view} ${view === 'profile' ? styles.active : ''}`}>
+            <ProfileView user={user} />
           </div>
         </main>
       </div>
