@@ -60,7 +60,7 @@
 .filterBtn {
   position: absolute;
   bottom: 24px;
-  left: 16px;
+  right: 16px;
   z-index: 500;
   width: 44px;
   height: 44px;
@@ -93,7 +93,7 @@
 .filterPopup {
   position: absolute;
   bottom: 76px;
-  left: 16px;
+  right: 16px;
   z-index: 500;
   background: var(--ink);
   border-radius: var(--r);
@@ -146,5 +146,5 @@
 @media (max-width: 599px) {
   .searchWrap { width: calc(100% - 72px); left: 16px; transform: none; }
   .filterBtn { bottom: 72px; }
-  .filterPopup { bottom: 124px; max-width: calc(100vw - 32px); }
+  .filterPopup { bottom: 124px; max-width: calc(100vw - 32px); right: 16px; }
 }
