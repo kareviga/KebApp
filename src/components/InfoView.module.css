@@ -66,4 +66,7 @@
   .scroll { padding-bottom: 80px; }
   .paramGrid { grid-template-columns: 1fr; }
   .formulaEq { font-size: 12px; }
+  .formulaVisual { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .fvPlus { display: none; }
+  .fvResult { grid-column: 1 / -1; text-align: center; padding: 8px 0 4px; font-size: 14px; }
 }

@@ -1,7 +1,7 @@
-export const WEIGHTS = { bst: 0.35, bs: 0.35, bf: 0.15, bp: 0.15 }
+export const WEIGHTS = { bst: 0.35, bs: 0.40, bf: 0.20, bp: 0.05 }
 
 export function calcK({ bst, bs, bf, bp }) {
-  return (bst * 0.35 + bs * 0.35 + bf * 0.15 + bp * 0.15) * 10
+  return (bst * 0.35 + bs * 0.40 + bf * 0.20 + bp * 0.05) * 10
 }
 
 export function kColor(k) {
@@ -37,7 +37,7 @@ export const SLIDER_DEFS = [
     },
   },
   {
-    key: 'bs', name: 'Smak (Bs)', weight: 35,
+    key: 'bs', name: 'Smak (Bs)', weight: 40,
     desc: 'Helhetlig smaksopplevelse — krydder, balanse og ettersmak. Veier like mye som størrelse fordi dårlig smak ikke kan kompenseres.',
     labels: {
       0: "Hiv'an på sjøen!", 1: 'Smaker mildt sagt vondt', 2: 'Smaker vondt',
@@ -48,7 +48,7 @@ export const SLIDER_DEFS = [
     },
   },
   {
-    key: 'bf', name: 'Friskhet og råvarer (Bf)', weight: 15,
+    key: 'bf', name: 'Friskhet og råvarer (Bf)', weight: 20,
     desc: 'Kvalitet og friskhet på ingrediensene. Ferske grønnsaker og godt kjøtt løfter hele opplevelsen.',
     labels: {
       0: 'Ekle og gamle råvarer', 1: 'Ikkje bra!', 2: 'Ikkje bra!',
@@ -58,7 +58,7 @@ export const SLIDER_DEFS = [
     },
   },
   {
-    key: 'bp', name: 'Stemning og sørvis (Bp)', weight: 15,
+    key: 'bp', name: 'Stemning og sørvis (Bp)', weight: 5,
     desc: 'Atmosfære, service og totalopplevelsen av stedet. Kebab er mer enn mat — det er kultur.',
     labels: {
       0: 'Dårlig stemning', 1: 'Dårlig stemning', 2: 'Dårlig stemning',

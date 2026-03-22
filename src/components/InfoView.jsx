@@ -23,9 +23,9 @@ export default function InfoView() {
             <div className={styles.formulaVisual}>
               {[
                 { key: 'Bst', name: 'Størrelse', weight: 35, color: '#c93a1a' },
-                { key: 'Bs',  name: 'Smak',      weight: 35, color: '#c93a1a' },
-                { key: 'Bf',  name: 'Friskhet',  weight: 15, color: '#d4850a' },
-                { key: 'Bp',  name: 'Stemning',  weight: 15, color: '#d4850a' },
+                { key: 'Bs',  name: 'Smak',      weight: 40, color: '#c93a1a' },
+                { key: 'Bf',  name: 'Friskhet',  weight: 20, color: '#d4850a' },
+                { key: 'Bp',  name: 'Stemning',  weight:  5, color: '#d4850a' },
               ].map((p, i, arr) => (
                 <div key={p.key} className={styles.fvItem}>
                   <div className={styles.fvBar} style={{ background: p.color, opacity: 0.15 + p.weight / 60 }} />
@@ -41,9 +41,9 @@ export default function InfoView() {
             <div className={styles.paramGrid}>
               {[
                 { key: 'Bst', name: 'Størrelse', desc: 'Mengde mat i forhold til pris. En sjenerøs porsjon til lav pris gir høy score.', weight: '35 %' },
-                { key: 'Bs',  name: 'Smak',      desc: 'Helhetlig smaksopplevelse — krydder, balanse og ettersmak.', weight: '35 %' },
-                { key: 'Bf',  name: 'Friskhet og råvarer', desc: 'Ingredienskvalitet. Ferske råvarer gir høy score.', weight: '15 %' },
-                { key: 'Bp',  name: 'Stemning og sørvis',  desc: 'Atmosfære og service på stedet.', weight: '15 %' },
+                { key: 'Bs',  name: 'Smak',      desc: 'Helhetlig smaksopplevelse — krydder, balanse og ettersmak.', weight: '40 %' },
+                { key: 'Bf',  name: 'Friskhet og råvarer', desc: 'Ingredienskvalitet. Ferske råvarer gir høy score.', weight: '20 %' },
+                { key: 'Bp',  name: 'Stemning og sørvis',  desc: 'Atmosfære og service på stedet.', weight: '5 %' },
               ].map(p => (
                 <div key={p.key} className={styles.paramCard}>
                   <div className={styles.paramKey}>{p.key}</div>
