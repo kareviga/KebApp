@@ -12,8 +12,8 @@ export default function InfoView() {
 
           <div className={styles.section}>
             <div className={styles.h}>Bakgrunn</div>
-            <p className={styles.p}>K-systemet er utviklet av Oslo og Råholt Kebablaug (ORK) — et fellesskap av dedikerte kebabelskere med én felles misjon: å finne, rangere og hedre byens beste kebab.</p>
-            <p className={styles.p}>Behovet for et strukturert vurderingssystem oppstod naturlig. Subjektive meninger om hva som er en "god kebab" skapte uenighet. K-systemet løser dette ved å bryte opplevelsen ned i fire målbare parametere som til sammen gir en objektiv K-verdi.</p>
+            <p className={styles.p}>K-systemet er utviklet av Oslo og Råholt Kebablaug (ORK) — et fellesskap av dedikerte kebabelskere med én felles misjon: å finne og rangere byens beste kebab.</p>
+            <p className={styles.p}>K-systemet bryter opplevelsen ned i fire målbare parametere som til sammen gir en objektiv K-verdi mellom 0 og 100.</p>
           </div>
 
           <div className={styles.section}>
@@ -43,7 +43,7 @@ export default function InfoView() {
                 { key: 'Bst', name: 'Størrelse', desc: 'Mengde mat i forhold til pris. En sjenerøs porsjon til lav pris gir høy score.', weight: '35 %' },
                 { key: 'Bs',  name: 'Smak',      desc: 'Helhetlig smaksopplevelse — krydder, balanse og ettersmak.', weight: '35 %' },
                 { key: 'Bf',  name: 'Friskhet og råvarer', desc: 'Ingredienskvalitet. Ferske råvarer gir høy score.', weight: '15 %' },
-                { key: 'Bp',  name: 'Stemning og sørvis',  desc: 'Atmosfære og service. Kebab er en totalopplevelse.', weight: '15 %' },
+                { key: 'Bp',  name: 'Stemning og sørvis',  desc: 'Atmosfære og service på stedet.', weight: '15 %' },
               ].map(p => (
                 <div key={p.key} className={styles.paramCard}>
                   <div className={styles.paramKey}>{p.key}</div>
@@ -60,15 +60,15 @@ export default function InfoView() {
               <tbody>
                 {[
                   ['≥ 90', 'Legendarisk kebab!', 'hi'],
-                  ['≥ 70', 'Utmerket babb!', 'hi'],
-                  ['≥ 50', 'Solid kebabopplevelse', 'mi'],
-                  ['≥ 30', 'Grei nok', 'mi'],
-                  ['≥ 10', 'Under pari...', 'lo'],
-                  ['< 10', 'Unngå for enhver pris!', 'lo'],
+                  ['≥ 70', 'Solid babb!', 'hi'],
+                  ['≥ 55', 'Grei nok', 'mi'],
+                  ['≥ 35', 'Skuffende', 'lo'],
+                  ['≥ 15', 'Under pari', 'lo'],
+                  ['< 15', 'Unngå for enhver pris!', 'lo'],
                 ].map(([range, label, cls]) => (
                   <tr key={range}>
                     <td className={styles.scaleRange}>{range}</td>
-                    <td>{label} <span className={`${styles.vc} ${styles[cls]}`}>{cls === 'hi' ? 'Utmerket' : cls === 'mi' ? 'Solid' : 'Under pari'}</span></td>
+                    <td className={`${styles.vc} ${styles[cls]}`}>{label}</td>
                   </tr>
                 ))}
               </tbody>
@@ -77,7 +77,7 @@ export default function InfoView() {
 
           <div className={styles.section}>
             <div className={styles.h}>Merk</div>
-            <p className={styles.p}>Størrelse og smak veier tyngst fordi de er kjernen i kebabopplevelsen. Friskhet og stemning løfter helheten, men kan ikke alene redde en dårlig kebab.</p>
+            <p className={styles.p}>Størrelse og smak veier tyngst fordi de er kjernen i kebabopplevelsen. Friskhet og stemning løfter helheten, men redder ikke en dårlig kebab.</p>
           </div>
         </div>
       </div>

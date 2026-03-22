@@ -18,10 +18,10 @@ export function kClass(k) {
 
 export function verdict(k) {
   if (k >= 90) return 'Legendarisk kebab!'
-  if (k >= 70) return 'Utmerket babb!'
-  if (k >= 50) return 'Solid kebabopplevelse'
-  if (k >= 30) return 'Grei nok'
-  if (k >= 10) return 'Under pari...'
+  if (k >= 70) return 'Solid babb!'
+  if (k >= 55) return 'Grei nok'
+  if (k >= 35) return 'Skuffende'
+  if (k >= 15) return 'Under pari'
   return 'Unngå for enhver pris!'
 }
 
@@ -61,7 +61,7 @@ export const SLIDER_DEFS = [
     key: 'bp', name: 'Stemning og sørvis (Bp)', weight: 15,
     desc: 'Atmosfære, service og totalopplevelsen av stedet. Kebab er mer enn mat — det er kultur.',
     labels: {
-      0: 'Bedre stemning i Mariupol', 1: 'Dårlig stemning', 2: 'Dårlig stemning',
+      0: 'Dårlig stemning', 1: 'Dårlig stemning', 2: 'Dårlig stemning',
       3: 'Ikke spesielt trivelig', 4: 'Litt under normalen', 5: 'Normal stemning',
       6: 'Normal stemning', 7: 'Hyggelig', 8: 'Hyggelig',
       9: 'Nå koser vi oss!', 10: 'Sørvis og stemning av beste sort!',
