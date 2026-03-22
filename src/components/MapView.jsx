@@ -84,10 +84,12 @@ export default function MapView({ places = [], onRate }) {
           })
         : L.divIcon({
             className: '',
-            html: `<div style="width:14px;height:14px;border-radius:50%;background:#9c876a44;border:2px solid #9c876a;box-shadow:0 1px 4px rgba(0,0,0,.2)"></div>`,
-            iconSize: [14, 14],
-            iconAnchor: [7, 7],
-            popupAnchor: [0, -10],
+            html: `<div style="width:24px;height:24px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;background:#5c4a30;opacity:0.5;box-shadow:0 2px 6px rgba(0,0,0,.3)">
+              <span style="transform:rotate(45deg);font-family:'IBM Plex Mono',monospace;font-size:8px;color:#faf7f2;font-weight:500">?</span>
+            </div>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 24],
+            popupAnchor: [0, -28],
           })
 
       const marker = L.marker([p.lat, p.lng], { icon })
