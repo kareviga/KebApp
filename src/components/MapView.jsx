@@ -17,6 +17,9 @@ export default function MapView({ places = [], onRate }) {
   const [showResults, setShowResults] = useState(false)
   const [typeFilter, setTypeFilter] = useState('all')
   const [meatFilter, setMeatFilter] = useState('all')
+  const [showFilter, setShowFilter] = useState(false)
+
+  const isFiltered = typeFilter !== 'all' || meatFilter !== 'all'
 
   useEffect(() => {
     if (leafletRef.current) return
@@ -32,7 +35,6 @@ export default function MapView({ places = [], onRate }) {
     L.control.zoom({ position: 'topright' }).addTo(map)
     leafletRef.current = map
 
-    // Cluster group with custom styling
     const cluster = L.markerClusterGroup({
       maxClusterRadius: 50,
       iconCreateFunction: (c) => {
@@ -54,12 +56,10 @@ export default function MapView({ places = [], onRate }) {
     const map = leafletRef.current
     if (!map || !L) return
 
-    // Remove old markers
     const cluster = clusterRef.current
     if (cluster) cluster.clearLayers()
     markersRef.current = []
 
-    const isFiltered = typeFilter !== 'all' || meatFilter !== 'all'
     const visible = isFiltered
       ? places.filter(p => Object.values(p.combos || {}).some(c =>
           (typeFilter === 'all' || c.type === typeFilter) &&
@@ -104,7 +104,7 @@ export default function MapView({ places = [], onRate }) {
           <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
             ${['Bst','Bs','Bf','Bp'].map((l,i) => `
               <div style="text-align:center;background:rgba(255,255,255,.07);border-radius:5px;padding:6px 2px">
-                <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:#faf7f2">${[p.bst,p.bs,p.bf,p.bp][i]}</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:#faf7f2">${[p.bst,p.bs,p.bf,p.bp][i] ?? '—'}</div>
                 <div style="font-size:9px;color:rgba(250,247,242,.32);text-transform:uppercase;letter-spacing:.04em;margin-top:2px">${l}</div>
               </div>`).join('')}
           </div>
@@ -119,7 +119,6 @@ export default function MapView({ places = [], onRate }) {
     })
   }, [places, typeFilter, meatFilter])
 
-  // Bridge popup button → React
   useEffect(() => {
     window.__ratePlace = (id) => {
       const place = places.find(p => p.id === id)
@@ -149,24 +148,13 @@ export default function MapView({ places = [], onRate }) {
     setTimeout(() => found?.openPopup(), 300)
   }
 
+  const clearFilters = () => { setTypeFilter('all'); setMeatFilter('all') }
+
   return (
     <div className={styles.wrap}>
       <div id="lmap" className={styles.map} ref={mapRef} />
-      <div className={styles.filterBar}>
-        <div className={styles.filterGroup}>
-          {TYPES.map(t => (
-            <button key={t} className={`${styles.chip} ${typeFilter === t ? styles.on : ''}`}
-              onClick={() => setTypeFilter(t)}>{TYPE_LABELS[t]}</button>
-          ))}
-        </div>
-        <div className={styles.filterGroup}>
-          {MEATS.map(m => (
-            <button key={m} className={`${styles.chip} ${meatFilter === m ? styles.on : ''}`}
-              onClick={() => setMeatFilter(m)}>{MEAT_LABELS[m]}</button>
-          ))}
-        </div>
-      </div>
 
+      {/* Search bar */}
       <div className={styles.searchWrap}>
         <div className={styles.searchInner}>
           <svg className={styles.searchIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -197,6 +185,41 @@ export default function MapView({ places = [], onRate }) {
           </div>
         )}
       </div>
+
+      {/* Filter button */}
+      <button
+        className={`${styles.filterBtn} ${isFiltered ? styles.filterBtnActive : ''}`}
+        onClick={() => setShowFilter(v => !v)}
+        title="Filter"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+        </svg>
+        {isFiltered && <span className={styles.filterDot} />}
+      </button>
+
+      {/* Filter popup */}
+      {showFilter && (
+        <div className={styles.filterPopup}>
+          <div className={styles.filterTitle}>Brødtype</div>
+          <div className={styles.filterGroup}>
+            {TYPES.map(t => (
+              <button key={t} className={`${styles.chip} ${typeFilter === t ? styles.on : ''}`}
+                onClick={() => setTypeFilter(t)}>{TYPE_LABELS[t]}</button>
+            ))}
+          </div>
+          <div className={styles.filterTitle}>Kjøtttype</div>
+          <div className={styles.filterGroup}>
+            {MEATS.map(m => (
+              <button key={m} className={`${styles.chip} ${meatFilter === m ? styles.on : ''}`}
+                onClick={() => setMeatFilter(m)}>{MEAT_LABELS[m]}</button>
+            ))}
+          </div>
+          {isFiltered && (
+            <button className={styles.clearBtn} onClick={clearFilters}>Nullstill filter</button>
+          )}
+        </div>
+      )}
     </div>
   )
 }
