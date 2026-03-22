@@ -36,7 +36,7 @@ export default function MapView({ places = [], onRate }) {
     leafletRef.current = map
 
     const cluster = L.markerClusterGroup({
-      maxClusterRadius: 50,
+      maxClusterRadius: 30,
       iconCreateFunction: (c) => {
         const count = c.getChildCount()
         return L.divIcon({

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { kColor, kClass, typeLabel, meatLabel } from '../lib/ksystem'
 import styles from './RankingView.module.css'
 
@@ -10,6 +10,17 @@ const MEAT_LABELS = { all:'Alle', storfe:'🐄 Storfe', kylling:'🐔 Kylling', 
 export default function RankingView({ places = [], onJumpMap }) {
   const [typeFilter, setTypeFilter] = useState('all')
   const [meatFilter, setMeatFilter] = useState('all')
+  const [showFilter, setShowFilter] = useState(false)
+  const popupRef = useRef(null)
+
+  useEffect(() => {
+    if (!showFilter) return
+    const handler = (e) => {
+      if (popupRef.current && !popupRef.current.contains(e.target)) setShowFilter(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [showFilter])
 
   const isFiltered = typeFilter !== 'all' || meatFilter !== 'all'
 
@@ -38,21 +49,44 @@ export default function RankingView({ places = [], onJumpMap }) {
 
   const numClass = i => i === 0 ? styles.gold : i === 1 ? styles.silver : i === 2 ? styles.bronze : ''
 
+  const clearFilters = () => { setTypeFilter('all'); setMeatFilter('all') }
+
   return (
     <div className={styles.wrap}>
-      <div className={styles.fbar}>
-        <div className={styles.filterGroup}>
-          {TYPES.map(t => (
-            <button key={t} className={`${styles.chip} ${typeFilter === t ? styles.on : ''}`}
-              onClick={() => setTypeFilter(t)}>{TYPE_LABELS[t]}</button>
-          ))}
-        </div>
-        <div className={styles.sep} />
-        <div className={styles.filterGroup}>
-          {MEATS.map(m => (
-            <button key={m} className={`${styles.chip} ${meatFilter === m ? styles.on : ''}`}
-              onClick={() => setMeatFilter(m)}>{MEAT_LABELS[m]}</button>
-          ))}
+      <div className={styles.toolbar}>
+        <div ref={popupRef} className={styles.filterWrap}>
+          <button
+            className={`${styles.filterBtn} ${isFiltered ? styles.filterBtnActive : ''}`}
+            onClick={() => setShowFilter(v => !v)}
+            title="Filter"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+            </svg>
+            <span>Filter{isFiltered ? ' (aktiv)' : ''}</span>
+            {isFiltered && <span className={styles.filterDot} />}
+          </button>
+          {showFilter && (
+            <div className={styles.filterPopup}>
+              <div className={styles.filterTitle}>Brødtype</div>
+              <div className={styles.filterGroup}>
+                {TYPES.map(t => (
+                  <button key={t} className={`${styles.chip} ${typeFilter === t ? styles.on : ''}`}
+                    onClick={() => setTypeFilter(t)}>{TYPE_LABELS[t]}</button>
+                ))}
+              </div>
+              <div className={styles.filterTitle}>Kjøtttype</div>
+              <div className={styles.filterGroup}>
+                {MEATS.map(m => (
+                  <button key={m} className={`${styles.chip} ${meatFilter === m ? styles.on : ''}`}
+                    onClick={() => setMeatFilter(m)}>{MEAT_LABELS[m]}</button>
+                ))}
+              </div>
+              {isFiltered && (
+                <button className={styles.clearBtn} onClick={clearFilters}>Nullstill filter</button>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
