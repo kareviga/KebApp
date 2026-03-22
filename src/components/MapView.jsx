@@ -11,6 +11,7 @@ export default function MapView({ places = [], onRate }) {
   const mapRef = useRef(null)
   const leafletRef = useRef(null)
   const markersRef = useRef([])
+  const clusterRef = useRef(null)
   const [search, setSearch] = useState('')
   const [results, setResults] = useState([])
   const [showResults, setShowResults] = useState(false)
@@ -30,6 +31,22 @@ export default function MapView({ places = [], onRate }) {
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map)
     L.control.zoom({ position: 'topright' }).addTo(map)
     leafletRef.current = map
+
+    // Cluster group with custom styling
+    const cluster = L.markerClusterGroup({
+      maxClusterRadius: 50,
+      iconCreateFunction: (c) => {
+        const count = c.getChildCount()
+        return L.divIcon({
+          className: '',
+          html: `<div style="width:38px;height:38px;border-radius:50%;background:#1c1510;border:2px solid #c93a1a;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#faf7f2;font-weight:500;box-shadow:0 3px 12px rgba(0,0,0,.4)">${count}</div>`,
+          iconSize: [38, 38],
+          iconAnchor: [19, 19],
+        })
+      }
+    })
+    map.addLayer(cluster)
+    clusterRef.current = cluster
   }, [])
 
   useEffect(() => {
@@ -38,7 +55,8 @@ export default function MapView({ places = [], onRate }) {
     if (!map || !L) return
 
     // Remove old markers
-    markersRef.current.forEach(m => map.removeLayer(m))
+    const cluster = clusterRef.current
+    if (cluster) cluster.clearLayers()
     markersRef.current = []
 
     const isFiltered = typeFilter !== 'all' || meatFilter !== 'all'
@@ -51,19 +69,28 @@ export default function MapView({ places = [], onRate }) {
 
     visible.forEach(p => {
       const k = (p.k != null && !isNaN(p.k)) ? p.k : null
-      const kDisplay = k != null ? k : 50
-      const col = kColor(kDisplay)
-      const icon = L.divIcon({
-        className: '',
-        html: `<div style="width:36px;height:36px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;background:${col};box-shadow:0 3px 12px ${col}88">
-          <span style="transform:rotate(45deg);font-family:'IBM Plex Mono',monospace;font-size:10px;color:#fff;font-weight:500">${k != null ? k.toFixed(0) : '?'}</span>
-        </div>`,
-        iconSize: [36, 36],
-        iconAnchor: [18, 36],
-        popupAnchor: [0, -40],
-      })
+      const rated = k != null
+      const col = rated ? kColor(k) : '#9c876a'
 
-      const marker = L.marker([p.lat, p.lng], { icon }).addTo(map)
+      const icon = rated
+        ? L.divIcon({
+            className: '',
+            html: `<div style="width:36px;height:36px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;background:${col};box-shadow:0 3px 12px ${col}88">
+              <span style="transform:rotate(45deg);font-family:'IBM Plex Mono',monospace;font-size:10px;color:#fff;font-weight:500">${k.toFixed(0)}</span>
+            </div>`,
+            iconSize: [36, 36],
+            iconAnchor: [18, 36],
+            popupAnchor: [0, -40],
+          })
+        : L.divIcon({
+            className: '',
+            html: `<div style="width:14px;height:14px;border-radius:50%;background:#9c876a44;border:2px solid #9c876a;box-shadow:0 1px 4px rgba(0,0,0,.2)"></div>`,
+            iconSize: [14, 14],
+            iconAnchor: [7, 7],
+            popupAnchor: [0, -10],
+          })
+
+      const marker = L.marker([p.lat, p.lng], { icon })
       marker.bindPopup(`
         <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:2px;padding-right:20px">${p.name}</div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(250,247,242,.4);margin-bottom:12px">${p.address || ''}</div>
@@ -85,6 +112,7 @@ export default function MapView({ places = [], onRate }) {
         </div>
       `, { minWidth: 240, maxWidth: 290 })
 
+      if (cluster) cluster.addLayer(marker)
       markersRef.current.push(marker)
     })
   }, [places, typeFilter, meatFilter])

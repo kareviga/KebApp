@@ -38,6 +38,12 @@ html, body, #root {
   overflow: hidden;
 }
 
+/* Hide default cluster styles */
+.leaflet-cluster-anim .leaflet-marker-icon,
+.leaflet-cluster-anim .leaflet-marker-shadow { transition: transform .3s ease, opacity .3s ease; }
+.marker-cluster-small, .marker-cluster-medium, .marker-cluster-large { background: transparent !important; }
+.marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div { display: none !important; }
+
 /* Leaflet overrides */
 .leaflet-container { background: #e8e0d0 !important; }
 .leaflet-tile-pane { filter: saturate(0.45) sepia(0.35) brightness(0.9); }
