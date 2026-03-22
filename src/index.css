@@ -36,6 +36,8 @@ html, body, #root {
   font-family: var(--fb);
   font-size: 15px;
   overflow: hidden;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 /* Hide default cluster styles */
