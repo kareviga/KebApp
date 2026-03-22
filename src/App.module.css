@@ -9,8 +9,6 @@
   display: flex;
   flex: 1;
   min-height: 0;
-  padding-top: var(--header);
-  padding-bottom: var(--footer);
   overflow: hidden;
 }
 
@@ -49,4 +47,8 @@
 
 @media (max-width: 599px) {
   .shell { padding-bottom: 52px; }
+}
+
+@media (min-width: 600px) {
+  .shell { padding-bottom: 0; }
 }

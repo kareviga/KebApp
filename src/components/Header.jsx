@@ -17,9 +17,6 @@ export default function Header({ onNavigate }) {
         <button className={styles.ghost} onClick={() => onNavigate('ranking')}>
           Rangering
         </button>
-        <button className={styles.primary} onClick={() => onNavigate('rate')}>
-          + Gi vurdering
-        </button>
         {user && (
           <button className={styles.avatar} onClick={signOut} title="Logg ut">
             {user.user_metadata?.avatar_url
