@@ -88,7 +88,10 @@ export default function Login() {
 
         <div className={styles.divider}><span>eller</span></div>
 
-        <button className={styles.btnGuest} onClick={signInAsGuest}>
+        <button className={styles.btnGuest} onClick={async () => {
+          const { error } = await signInAsGuest()
+          if (error) alert(error.message)
+        }}>
           Fortsett som gjestebruker
         </button>
       </div>
