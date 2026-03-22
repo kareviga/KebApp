@@ -12,7 +12,7 @@ export default function InfoView() {
 
           <div className={styles.section}>
             <div className={styles.h}>Bakgrunn</div>
-            <p className={styles.p}>K-systemet er utviklet av Oslo og Råholt Kebablaug (ORK) — et fellesskap av dedikerte kebabelskere med én felles misjon: å finne og rangere byens beste kebab.</p>
+            <p className={styles.p}>K-systemet er utviklet av Oslo og Råholt Kebablaug (ORK) — et fellesskap av dedikerte kebabelskere med én felles misjon: å finne og rangere verdens beste kebab.</p>
             <p className={styles.p}>K-systemet bryter opplevelsen ned i fire målbare parametere som til sammen gir en objektiv K-verdi mellom 0 og 100.</p>
           </div>
 
@@ -77,7 +77,7 @@ export default function InfoView() {
 
           <div className={styles.section}>
             <div className={styles.h}>Merk</div>
-            <p className={styles.p}>Størrelse og smak veier tyngst fordi de er kjernen i kebabopplevelsen. Friskhet og stemning løfter helheten, men redder ikke en dårlig kebab.</p>
+            <p className={styles.p}>Smak og størrelse veier tyngst — det er selve kebaben som skal vurderes. Friskhet og råvarekvalitet løfter helheten, men stemning og sørvis er bare krydder på toppen.</p>
           </div>
         </div>
       </div>
