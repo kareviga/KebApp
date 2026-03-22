@@ -32,6 +32,9 @@ export function useAuth() {
       options: { redirectTo: window.location.origin },
     })
 
+  const signInAsGuest = () =>
+    supabase.auth.signInAnonymously()
+
   const signInWithEmail = (email, password) =>
     supabase.auth.signInWithPassword({ email, password })
 
@@ -40,5 +43,5 @@ export function useAuth() {
 
   const signOut = () => supabase.auth.signOut()
 
-  return { user, loading, signInWithGoogle, signInWithFacebook, signInWithEmail, signUpWithEmail, signOut }
+  return { user, loading, signInWithGoogle, signInWithFacebook, signInWithEmail, signUpWithEmail, signInAsGuest, signOut }
 }

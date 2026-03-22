@@ -3,7 +3,7 @@ import { useAuth } from '../hooks/useAuth'
 import styles from './Login.module.css'
 
 export default function Login() {
-  const { signInWithGoogle, signInWithFacebook, signInWithEmail, signUpWithEmail } = useAuth()
+  const { signInWithGoogle, signInWithFacebook, signInWithEmail, signUpWithEmail, signInAsGuest } = useAuth()
   const [mode, setMode] = useState('signin') // 'signin' | 'signup'
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -85,6 +85,12 @@ export default function Login() {
             {mode === 'signin' ? 'Ingen konto? Registrer deg' : 'Har du konto? Logg inn'}
           </button>
         </div>
+
+        <div className={styles.divider}><span>eller</span></div>
+
+        <button className={styles.btnGuest} onClick={signInAsGuest}>
+          Fortsett som gjestebruker
+        </button>
       </div>
     </div>
   )

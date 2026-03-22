@@ -37,7 +37,8 @@ export default function ProfileView({ user }) {
     ? ratings.reduce((s, r) => s + calcK(r), 0) / totalRatings
     : null
 
-  const displayName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Bruker'
+  const isGuest = user.is_anonymous
+  const displayName = isGuest ? 'Gjestebruker' : (user.user_metadata?.full_name || user.email?.split('@')[0] || 'Bruker')
   const avatarUrl = user.user_metadata?.avatar_url
 
   return (
@@ -53,7 +54,7 @@ export default function ProfileView({ user }) {
             </div>
             <div className={styles.profileInfo}>
               <div className={styles.name}>{displayName}</div>
-              <div className={styles.email}>{user.email}</div>
+              <div className={styles.email}>{isGuest ? 'Ikke innlogget' : user.email}</div>
             </div>
           </div>
 

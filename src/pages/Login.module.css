@@ -166,3 +166,17 @@
   font-family: var(--fb);
   text-align: left;
 }
+
+.btnGuest {
+  width: 100%;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px dashed var(--b3);
+  border-radius: var(--rs);
+  font-family: var(--fb);
+  font-size: 14px;
+  color: var(--t3);
+  cursor: pointer;
+  transition: all .15s;
+}
+.btnGuest:hover { border-color: var(--t2); color: var(--t2); }
